@@ -8,7 +8,8 @@ namespace test1
 {
     public class SMath
     {
-        public static readonly float PI = (float)Math.PI;
+        public const float PI = (float)Math.PI;
+        public const float SmallNumber = 1.0e-8f;
 
         static float _toRadian = PI / 180.0f;
         static float _toDegree = 180.0f / PI;
@@ -16,5 +17,8 @@ namespace test1
         public static float ToRadian(float degree) { return degree * _toRadian; }
         public static float ToDegree(float radian) { return radian * _toDegree; }
         public static float Tan(float rad) { return (float)Math.Tan(rad); }
+        public static float InvSqrt(float f) { return (float)(1.0 / Math.Sqrt(f)); }
+        public static float Sqrt(float f) { return (float)Math.Sqrt(f); }
+        public static float Min(float v1, float v2) { return v2 < v1 ? v2 : v1; }
     }
 }

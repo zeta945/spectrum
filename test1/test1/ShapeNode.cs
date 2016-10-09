@@ -20,5 +20,18 @@ namespace test1
             get { return _shape; }
             set { _shape = value; }
         }
+
+        public float Trace(Ray ray)
+        {
+            if(_shape != null)
+            {
+                Transform worldTransformInv = WorldTransform.Inverse;
+
+                Ray localRay = ray.Transform(worldTransformInv);
+                return _shape.Trace(localRay);
+            }
+
+            return -1.0f;
+        }
     }
 }

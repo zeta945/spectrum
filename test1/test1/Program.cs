@@ -13,11 +13,14 @@ namespace test1
             Scene scene = new Scene();
             scene.Root.AddChild(scene.CreateSphere(10));
 
-            Camera cam = Camera.CreatePerspective(90, 16.0f / 9.0f, 1, 1000);
-            RenderView view = new RenderView(scene, cam, Transform.Identity);
+            Camera cam = Camera.CreatePerspective(90, 1, 1, 1000);
+            Transform camTrans = Transform.Identity;
+            camTrans.Translation = new Vector3(0, -20, 0);
+            RenderView view = new RenderView(scene, cam, camTrans);
 
+            RenderOutput output = new RenderOutput(50, 50);
             Renderer r = new Renderer();
-            r.Render(view);
+            r.Render(view, output);
 
         }
     }

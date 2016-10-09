@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 namespace test1
 {
 
-    public class RenderView
-    {
-        Scene _scene;
-        Camera _camera;
-        Transform _cameraTransform;
 
-        public RenderView(Scene scene, Camera camera, Transform cameraTransform)
+    public class RenderOutput
+    {
+        int _width;
+        int _height;
+
+        public RenderOutput(int width, int height)
         {
-            _scene = scene;
-            _camera = camera;
-            _cameraTransform = cameraTransform;
+            _width = width;
+            _height = height;
         }
 
-        public Ray GenerateRay(float x, float y)
+        public int Width
         {
-            float fovHalfRadianY = SMath.ToRadian(_camera.FOV * 0.5f);
-            float fovHalfRadianX = fovHalfRadianY * _camera.Aspect;
-            float sx = SMath.Tan(fovHalfRadianX) * _camera.Near;
-            float sy = SMath.Tan(fovHalfRadianY) * _camera.Near;
+            get { return _width; }
+        }
 
+        public int Height
+        {
+            get { return _height; }
         }
     }
 
@@ -39,9 +39,29 @@ namespace test1
 
         }
 
-        public void Render(RenderView view)
+        public void Render(RenderView view, RenderOutput output)
         {
+            for(int i = 0; i < output.Height; i++)
+            {
+                float y = ((float)i / output.Height - 0.5f) * 2;
+                for(int j = 0; j < output.Width; j++)
+                {
+                    float x = ((float)j / output.Width - 0.5f) * 2;
+                    Ray ray = view.GenerateRay(x, y);
 
+                    float dist = view.Trace(ray);
+                    if(dist >= 0)
+                    {
+                        Console.Write(".");
+                    }
+                    else
+                    {
+                        Console.Write("=");
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.ReadLine();
         }
     }
 }
